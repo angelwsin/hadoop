@@ -1,0 +1,59 @@
+
+
+
+
+node           
+           NameNode, SecondaryNameNode,    ResourceManager, NodeManager, 
+                 and DataNode                   and WebAppProxy                Job History Server
+                                
+         ----------HDFS--------------------|---------YARN -----------------|------MapReduce -----
+
+
+
+
+Configuring
+                  common                   hdfs              yarn             mapred
+            -------------------|-----------------------|----------------|------------
+≈‰÷√∏≤∏«               core-site.xml        hdfs-site.xml          yarn-site.xml     mapred-site.xml
+   
+ ƒ¨»œ≈‰÷√               core-default.xml     hdfs-default.xml       yarn-default.xml  mapred-default.xml
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ hadoop
+     |
+     |__common
+     |
+     |__HDFS
+     |    |
+     |    |___________fs
+     |    |
+     |    |___________nfs
+     |    |
+     |    |___________hdfs
+     |           
+     |
+     |__MapReduce
+     |
+     |__yarn
+     |
+     |__Configuration
+     |
+     |__tool
+                  
+                  
+                  
+  
+  
