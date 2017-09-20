@@ -7,6 +7,7 @@
   <packaging>pom</packaging>
   <modules>
     <module>hadoop-hdfs</module>
+    <module>hadoop-mapreduce</module>
   </modules>
    <properties>
      <hadoop-version>2.7.4</hadoop-version>
@@ -23,8 +24,28 @@
     <artifactId>hadoop-hdfs</artifactId>
     <version>${hadoop-version}</version>
 </dependency>
+
+<dependency>
+    <groupId>org.apache.hadoop</groupId>
+    <artifactId>hadoop-mapreduce-client-core</artifactId>
+    <version>${hadoop-version}</version>
+</dependency>
+
   
       
     </dependencies>
   </dependencyManagement>
+  
+   <build>
+    <plugins>
+      <plugin>  
+            <groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-compiler-plugin</artifactId>  
+            <configuration>  
+                <source>1.8</source>  
+                <target>1.8</target>  
+            </configuration>  
+        </plugin>  
+    </plugins>
+   </build>
 </project>

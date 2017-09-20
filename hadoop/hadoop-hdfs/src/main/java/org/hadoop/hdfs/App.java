@@ -32,6 +32,7 @@ public class App
     		Path f=  new Path("hdfs://192.168.1.127:9000/logs/log1.txt");
     		fileContext.delete(f, false);
     		File file = new File(System.getProperty("user.dir")+File.separator+"file/log.txt");
+    		
     		try(FSDataOutputStream out =  fs.create(f, EnumSet.of(CreateFlag.CREATE), CreateOpts.blockSize(64).perms(new FsPermission((short)777)));
     			FileInputStream is=  new FileInputStream(file);) {
     			byte[] b=  new byte[is.available()];
@@ -52,6 +53,35 @@ public class App
 			}*/
     		
     	
+    		
+    		
+    		
+    		
+    		/*
+    	     * 
+    	     * 
+    	     *   AbstractFileSystem(Hadoop file system)
+    	     *         |
+    	     *         |_Hdfs
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     * 
+    	     */
     	
     }
 }
