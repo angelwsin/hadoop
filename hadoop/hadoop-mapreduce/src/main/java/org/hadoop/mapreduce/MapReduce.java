@@ -1,50 +1,57 @@
 package org.hadoop.mapreduce;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Objects;
-import java.util.StringTokenizer;
 
-import org.apache.commons.math3.analysis.function.Max;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.Mapper;
-import org.apache.hadoop.mapred.OutputCollector;
-import org.apache.hadoop.mapred.Reducer;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.StringUtils;
 
 public class MapReduce {
+	
+	
+	public static void main(String[] args)throws Exception {
+		// Create a new Job
+		     Job job = Job.getInstance();
+		     job.setJarByClass(MapReduce.class);
+		     
+		     // Specify various job-specific parameters     
+		     job.setJobName("myjob");
+		     //设置输入和输出路径
+		     FileInputFormat.addInputPath(job, new Path("/logs/weather.txt"));
+		     FileOutputFormat.setOutputPath(job, new Path("/logs/weat"));
+		     job.setMapperClass(LogMapper.class);
+		     job.setReducerClass(Reducex.class);
+		
+		     // Submit the job, then poll for progress until the job is complete
+		     job.waitForCompletion(true);
+		 
+	}
 
 }
 
 
 
+// 2.x 引入了 Context
+class LogMapper extends Mapper<IntWritable, Text, Text, IntWritable>{
 
-// 2.8.1 引入了 Context
-class LogMapper implements Mapper<IntWritable, Text, Text, IntWritable>{
-
-    @Override
-    public void configure(JobConf arg0) {
-        
-    }
-
-    @Override
-    public void close() throws IOException {
-        
-    }
-
-    @Override
-    public void map(IntWritable arg0, Text arg1, OutputCollector<Text, IntWritable> arg2, Reporter arg3) throws IOException {
-              //StringTokenizer token = new StringTokenizer(arg1.toString()," ");
-              String[] str  =  StringUtils.split(arg1.toString(), ' ');
-              if(!(Objects.isNull(str)||str.length<3)){
-              arg2.collect(new Text(str[0]), new IntWritable(Integer.valueOf(str[2].replace("°C", ""))));
-              }
-        
-    }
+    
+	
+	@Override
+	protected void map(IntWritable key, Text value, Mapper<IntWritable, Text, Text, IntWritable>.Context context)
+			throws IOException, InterruptedException {
+		//StringTokenizer token = new StringTokenizer(arg1.toString()," ");
+        String[] str  =  StringUtils.split(value.toString(), ' ');
+        if(!(Objects.isNull(str)||str.length<3)){
+        	context.write(new Text(str[0]), new IntWritable(Integer.valueOf(str[2].replace("°C", ""))));
+        }
+	}
     
     
     
@@ -52,26 +59,14 @@ class LogMapper implements Mapper<IntWritable, Text, Text, IntWritable>{
 }
 
 
-class Reducex implements  Reducer<Text, IntWritable, Text, IntWritable>{
-
-    @Override
-    public void configure(JobConf job) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void close() throws IOException {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
-               
-        output.collect(key, values.next());
-    }
+class Reducex extends  Reducer<Text, IntWritable, Text, IntWritable>{
 
     
+	@Override
+	protected void reduce(Text arg0, Iterable<IntWritable> arg1,
+			Reducer<Text, IntWritable, Text, IntWritable>.Context arg2) throws IOException, InterruptedException {
+		
+		arg2.write(arg0, arg1.iterator().next());
+	}
     
 }

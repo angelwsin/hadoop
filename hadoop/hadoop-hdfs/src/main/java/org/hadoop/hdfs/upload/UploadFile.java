@@ -20,7 +20,7 @@ import org.apache.hadoop.fs.permission.FsPermission;
 public class UploadFile {
     
     
-    static String  PATH = System.getProperty("user.dir")+File.pathSeparator+"file";
+    static String  PATH = System.getProperty("user.dir")+File.separator+"file";
     
     public static void main(String[] args) throws Exception{
         
@@ -29,7 +29,9 @@ public class UploadFile {
         conf.set("fs.AbstractFileSystem.hdfs.impl", "org.apache.hadoop.fs.Hdfs");
             Hdfs fs =   (Hdfs) AbstractFileSystem.createFileSystem(new URI("hdfs://192.168.1.127:9000"), conf);
             FileContext fileContext = FileContext.getFileContext(fs, conf);
+            fileContext.mkdir(new Path("hdfs://192.168.1.127:9000/logs"), new FsPermission((short)777), false);
             Path f=  new Path("hdfs://192.168.1.127:9000/logs/weather.txt");
+            //fileContext.delete(f, false);
             File file = new File(PATH+"/weather.txt");
             
             try(FSDataOutputStream out =  fs.create(f, EnumSet.of(CreateFlag.CREATE), CreateOpts.blockSize(64).perms(new FsPermission((short)777)));
