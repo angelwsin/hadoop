@@ -20,7 +20,7 @@ public class Hadoop {
     	//	Hdfs fs = 	(Hdfs) AbstractFileSystem.createFileSystem(new URI("hdfs://192.168.1.127:9000"), conf);
     	//	FileContext fileContext = FileContext.getFileContext(fs, conf);
     		//fileContext.mkdir(new Path("hdfs://192.168.1.127:9000/"), new FsPermission((short)777), false);
-    		try (FSDataInputStream input = fs.open(new Path("hdfs://192.168.1.127:9000/logs/weather.txt"));){
+    		try (FSDataInputStream input = fs.open(new Path("hdfs://192.168.1.127:9000/logs/weat.txt"));){
     			System.out.println(input.available());
     			byte[] b = new byte[input.available()];
     			input.read(b);
