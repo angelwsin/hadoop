@@ -9,6 +9,7 @@
     <module>hadoop-hdfs</module>
     <module>hadoop-mapreduce</module>
     <module>hadoop-hbase</module>
+    <module>hadoop-yarn</module>
   </modules>
    <properties>
      <hadoop-version>2.7.4</hadoop-version>
