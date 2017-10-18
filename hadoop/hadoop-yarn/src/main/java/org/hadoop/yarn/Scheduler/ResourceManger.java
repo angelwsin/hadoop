@@ -1,4 +1,5 @@
 package org.hadoop.yarn.Scheduler;
+
 //http://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-site/ResourceManagerRestart.html
 public class ResourceManger {
 	
@@ -12,5 +13,8 @@ public class ResourceManger {
 	      //RM将在重新启动时从状态重新加载此信息，并重新启动以前运行的应用程序。 用户不需要重新提交申请。
 	 //2)ResourceManager Restart Phase 2 (Work-preserving RM restart):专注于重新构建ResourceManager的运行状态，方法是在重新启动之后，
 	          //通过组合来自NodeManagers的容器状态和来自ApplicationMasters的容器请求。 与第1阶段的主要区别在于，以前运行的应用程序在RM重新启动后不会被杀死，因此由于RM中断，应用程序不会失去其工作。
+	
+	
+	
 
 }
