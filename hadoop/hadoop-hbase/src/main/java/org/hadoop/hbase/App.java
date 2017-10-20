@@ -2,8 +2,12 @@ package org.hadoop.hbase;
 
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HConstants;
+import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Put;
@@ -16,30 +20,56 @@ import org.apache.hadoop.hbase.client.Table;
 2.column keycolumn key是第二维，数据按rowkey字典排序后，如果rowkey相同，则是根据column key来排序的，也是按字典排序
 3.timestamptimestamp 时间戳，是第三维，这是个按降序排序的，即最新的数据排在最前面
 */
+
+//http://www.cnblogs.com/simple-focus/p/6198329.html
+
+
 public class App 
 {
+	
+	/**
+	 * Admin    操作在Tables上 used to create, drop, list, enable and disable tables, add and drop table
+     *               column families and other administrative operations
+	 * 
+	 * Table    单个Table上 Table can be used to get, put, delete or scan data from a table
+	 */
     public static void main( String[] args )throws Exception
     {
-        
         Configuration config = new Configuration(false);
         config.set(HConstants.ZOOKEEPER_QUORUM, "n3,n4,n5,n6,n7");
         //config.set(HConstants.ZOOKEEPER_CLIENT_PORT, value);
-        Connection connection = ConnectionFactory.createConnection(config);
-        Table table = connection.getTable(TableName.valueOf("table1"));
-        try {
-            //row
-            Put put = new Put("user".getBytes());
-            //column family
-            put.addColumn("userName".getBytes(), null, "zhangsan".getBytes());
-            put.addColumn("password".getBytes(), null, "123456".getBytes());
-            table.put(put);
+     
+     
+        
+        try (   Connection connection = ConnectionFactory.createConnection(config);){
+        	
+        	  Admin admin =  connection.getAdmin();
+              if(!admin.tableExists( TableName.valueOf("users"))){
+              	HTableDescriptor table = new HTableDescriptor(TableName.valueOf("users"));
+              	HColumnDescriptor hColum = new  HColumnDescriptor("user");
+              	table.addFamily(hColum);
+              	admin.createTable(table);
+              }else{
+            	  Table table =  connection.getTable(TableName.valueOf("users"));
+            	  //Row Key
+            	  Put  row = new Put("09403".getBytes());
+            	  //列族:限定符(限定符任意不同行之间)
+            	  row.addColumn("user".getBytes(), "userName".getBytes(), "xiaoming".getBytes());
+            	  row.addColumn("user".getBytes(), "age".getBytes(), NumberUtils.int2byte(60));
+            	  table.put(row);
+            	 
+              }
           // Use the table as needed, for a single operation and a single thread
         } finally {
-          table.close();
-          connection.close();
+        //  table.close();
         }
         
+        
+        
+        
     }
+    
+    
     
     
     
