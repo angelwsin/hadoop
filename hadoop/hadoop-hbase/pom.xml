@@ -38,14 +38,6 @@
   
   <build>
    <plugins>
-    <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
             <plugin>
 		<groupId>org.apache.maven.plugins</groupId>
 		<artifactId>maven-toolchains-plugin</artifactId>
@@ -67,7 +59,7 @@
                     <classesDirectory>target/classes/</classesDirectory>
                     <archive>
                         <manifest>
-                            <mainClass>org.hadoop.hbase.App</mainClass>
+                            <mainClass>org.hadoop.hbase.HbaseCmd</mainClass>
                             <!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 -->
                             <useUniqueVersions>false</useUniqueVersions>
                             <addClasspath>true</addClasspath>

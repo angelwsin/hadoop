@@ -27,10 +27,10 @@ public class UploadFile {
         Configuration conf = new Configuration(false);
         //conf.addResource(name);
         conf.set("fs.AbstractFileSystem.hdfs.impl", "org.apache.hadoop.fs.Hdfs");
-            Hdfs fs =   (Hdfs) AbstractFileSystem.createFileSystem(new URI("hdfs://192.168.1.127:9000"), conf);
+            Hdfs fs =   (Hdfs) AbstractFileSystem.createFileSystem(new URI("hdfs://n1:9000"), conf);
             FileContext fileContext = FileContext.getFileContext(fs, conf);
-            fileContext.mkdir(new Path("hdfs://192.168.1.127:9000/logs"), new FsPermission((short)777), false);
-            Path f=  new Path("hdfs://192.168.1.127:9000/logs/weather.txt");
+            fileContext.mkdir(new Path("hdfs://n1:9000/logs"), new FsPermission((short)777), false);
+            Path f=  new Path("hdfs://n1:9000/logs/weather.txt");
             //fileContext.delete(f, false);
             File file = new File(PATH+"/weather.txt");
             

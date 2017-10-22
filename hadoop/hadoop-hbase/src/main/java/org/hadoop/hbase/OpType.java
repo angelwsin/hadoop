@@ -3,10 +3,10 @@ package org.hadoop.hbase;
 public enum OpType {
 	
 	create,
-	insert,
+	put,
 	delete,
-	update,
-	select;
+	get,
+	scan;
 	
 
 }
