@@ -1,6 +1,6 @@
 package org.hadoop.hbase;
 
-
+//http://hbase.apache.org/book.html#datamodel
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HConstants;
